@@ -9,7 +9,7 @@ import Redis from "ioredis";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: "10.0.0.182",
+  host: process.env.DB_HOST || "localhost" || "127.0.0.1",
   port: 5432,
   username: "postgres",
   password: "postgres",
@@ -21,8 +21,9 @@ export const AppDataSource = new DataSource({
   subscribers: [],
 });
 
-const url = "redis://10.0.0.182:6379";
+const url = process.env.REDIS_URL || "redis://127.0.0.1:12345"|| "redis://localhost:12345" ;
 export const redisClient = new Redis(url);
 redisClient.on("connect", () => {
   console.log("Redis client connected");
 });
+
